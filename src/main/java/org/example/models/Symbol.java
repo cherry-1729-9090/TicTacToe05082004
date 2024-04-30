@@ -1,17 +1,21 @@
 package org.example.models;
 
 public class Symbol {
-    private char aChar;
+    private char symbolChar;
 
-    public Symbol(char aChar) {
-        this.aChar = aChar;
+    public Symbol(char symbolChar) {
+        this.symbolChar = symbolChar;
     }
 
-    public char getaChar() {
-        return aChar;
+    public char getSymbolChar() {
+        return symbolChar;
     }
 
-    public void setaChar(char aChar) {
-        this.aChar = aChar;
+    public void setSymbolChar(char symbolChar) {
+        this.symbolChar = symbolChar;
+    }
+
+    public Character getaChar() {
+        return '0';
     }
 }

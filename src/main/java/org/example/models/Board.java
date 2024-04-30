@@ -4,40 +4,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
-    private int size;
-    private List<List<Cell>> board;
+    private int boardSize;
+    private List<List<Cell>> gameBoard;
 
     public int getSize() {
-        return size;
+        return boardSize;
     }
 
     public void setSize(int size) {
-        this.size = size;
+        this.boardSize = size;
     }
 
     public List<List<Cell>> getBoard() {
-        return board;
+        return gameBoard;
     }
 
     public void setBoard(List<List<Cell>> board) {
-        this.board = board;
+        this.gameBoard = board;
     }
 
     public Board(int size) {
-        this.size = size;
-        board = new ArrayList<>();
+        this.boardSize = size;
+        gameBoard = new ArrayList<>();
 
         for (int i = 0; i < size; i++) {
-            board.add(new ArrayList<>());
+            gameBoard.add(new ArrayList<>());
 
             for (int j = 0; j < size; j++) {
-                board.get(i).add(new Cell(i, j));
+                gameBoard.get(i).add(new Cell(i, j));
             }
         }
     }
 
     public void printBoard() {
-        for (List<Cell> row : board) {
+        for (List<Cell> row : gameBoard) {
             for (Cell cell : row) {
                 if (cell.getCellState().equals(CellState.EMPTY)) {
                     System.out.print("| -- |");

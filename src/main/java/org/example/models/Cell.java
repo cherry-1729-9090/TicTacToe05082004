@@ -1,46 +1,46 @@
 package org.example.models;
 
 public class Cell {
-    private int row;
-    private int col;
-    private CellState cellState;
-    private Player player;
+    private int rowIndex;
+    private int colIndex;
+    private CellState state;
+    private Player occupyingPlayer;
 
-    public Cell(int row, int col) {
-        this.row = row;
-        this.col = col;
-        this.cellState = CellState.EMPTY;
+    public Cell(int rowIndex, int colIndex) {
+        this.rowIndex = rowIndex;
+        this.colIndex = colIndex;
+        this.state = CellState.EMPTY;
     }
 
     public int getRow() {
-        return row;
+        return rowIndex;
     }
 
-    public void setRow(int row) {
-        this.row = row;
+    public void setRow(int rowIndex) {
+        this.rowIndex = rowIndex;
     }
 
     public int getCol() {
-        return col;
+        return colIndex;
     }
 
-    public void setCol(int col) {
-        this.col = col;
+    public void setCol(int colIndex) {
+        this.colIndex = colIndex;
     }
 
     public CellState getCellState() {
-        return cellState;
+        return state;
     }
 
-    public void setCellState(CellState cellState) {
-        this.cellState = cellState;
+    public void setCellState(CellState state) {
+        this.state = state;
     }
 
     public Player getPlayer() {
-        return player;
+        return occupyingPlayer;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public void setPlayer(Player occupyingPlayer) {
+        this.occupyingPlayer = occupyingPlayer;
     }
 }

@@ -8,26 +8,25 @@ import org.example.models.Player;
 import java.util.List;
 
 public class GameController {
-    public Game startGame(int dimension, List<Player> players) {
-        //TODO
-        //Validate if 2 players have the same symbol or not ?
-        //If 2 players have same symbol, throw some exception.
-        return new Game(dimension, players);
+    public Game startGame(int gameDimension, List<Player> gamePlayers) {
+        // Validate if 2 players have the same symbol or not
+        // If 2 players have the same symbol, throw some exception
+        return new Game(gameDimension, gamePlayers);
     }
 
-    public void makeMove(Game game) throws InvalidMoveException {
-        game.makeMove();
+    public void makeMove(Game currentGame) throws InvalidMoveException {
+        currentGame.makeMove();
     }
 
-    public GameState checkState(Game game) {
-        return game.getGameState();
+    public GameState checkState(Game currentGame) {
+        return currentGame.getGameState();
     }
 
-    public Player getWinner(Game game) {
-        return game.getWinner();
+    public Player getWinner(Game currentGame) {
+        return currentGame.getWinner();
     }
 
-    public void printBoard(Game game) {
-        game.printBoard();
+    public void printBoard(Game currentGame) {
+        currentGame.printBoard();
     }
 }

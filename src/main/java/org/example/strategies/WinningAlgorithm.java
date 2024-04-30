@@ -7,70 +7,70 @@ import java.util.HashMap;
 
 public class WinningAlgorithm {
     // row number -> hashMap for that row
-    HashMap<Integer, HashMap<Character, Integer>> rowMaps = new HashMap<>();
-    HashMap<Integer, HashMap<Character, Integer>> colMaps = new HashMap<>();
-    HashMap<Character, Integer> leftDiagonalMap = new HashMap<>();
-    HashMap<Character, Integer> rightDiagonalMap = new HashMap<>();
+    private HashMap<Integer, HashMap<Character, Integer>> rowCharacterCountMap = new HashMap<>();
+    private HashMap<Integer, HashMap<Character, Integer>> colCharacterCountMap = new HashMap<>();
+    private HashMap<Character, Integer> leftDiagonalCharacterCountMap = new HashMap<>();
+    private HashMap<Character, Integer> rightDiagonalCharacterCountMap = new HashMap<>();
 
-    public boolean checkWinner(Board board, Move move) {
+    public boolean checkWinner(Board gameBoard, Move move) {
         int row = move.getCell().getRow();
         int col = move.getCell().getCol();
-        Character character = move.getPlayer().getSymbol().getaChar();
+        Character symbolChar = move.getPlayer().getSymbol().getSymbolChar();
 
-        //Row
-        if (!rowMaps.containsKey(row)) {
-            rowMaps.put(row, new HashMap<>());
+        // Row
+        if (!rowCharacterCountMap.containsKey(row)) {
+            rowCharacterCountMap.put(row, new HashMap<>());
         }
-        HashMap<Character, Integer> currRowMap = rowMaps.get(row);
+        HashMap<Character, Integer> currRowMap = rowCharacterCountMap.get(row);
 
-        if (!currRowMap.containsKey(character)) {
-            currRowMap.put(character, 1);
+        if (!currRowMap.containsKey(symbolChar)) {
+            currRowMap.put(symbolChar, 1);
         } else {
-            currRowMap.put(character, currRowMap.get(character) + 1);
+            currRowMap.put(symbolChar, currRowMap.get(symbolChar) + 1);
         }
 
-        if (currRowMap.get(character) == board.getSize()) {
+        if (currRowMap.get(symbolChar) == gameBoard.getSize()) {
             return true;
         }
 
-        //Col
-        if (!colMaps.containsKey(col)) {
-            colMaps.put(col, new HashMap<>());
+        // Column
+        if (!colCharacterCountMap.containsKey(col)) {
+            colCharacterCountMap.put(col, new HashMap<>());
         }
-        HashMap<Character, Integer> currColMap = colMaps.get(col);
+        HashMap<Character, Integer> currColMap = colCharacterCountMap.get(col);
 
-        if (!currColMap.containsKey(character)) {
-            currColMap.put(character, 1);
+        if (!currColMap.containsKey(symbolChar)) {
+            currColMap.put(symbolChar, 1);
         } else {
-            currColMap.put(character, currColMap.get(character) + 1);
+            currColMap.put(symbolChar, currColMap.get(symbolChar) + 1);
         }
 
-        if (currColMap.get(character) == board.getSize()) {
+        if (currColMap.get(symbolChar) == gameBoard.getSize()) {
             return true;
         }
 
-        //Left Diagonal
+        // Left Diagonal
         if (row == col) {
-            if (!leftDiagonalMap.containsKey(character)) {
-                leftDiagonalMap.put(character, 1);
+            if (!leftDiagonalCharacterCountMap.containsKey(symbolChar)) {
+                leftDiagonalCharacterCountMap.put(symbolChar, 1);
             } else {
-                leftDiagonalMap.put(character, leftDiagonalMap.get(character) + 1);
+                leftDiagonalCharacterCountMap.put(symbolChar, leftDiagonalCharacterCountMap.get(symbolChar) + 1);
             }
 
-            if (leftDiagonalMap.get(character) == board.getSize()) {
+            if (leftDiagonalCharacterCountMap.get(symbolChar) == gameBoard.getSize()) {
                 return true;
             }
         }
 
-        //Right Diagonal
-        if (row + col == board.getSize() - 1) {
-            if (!rightDiagonalMap.containsKey(character)) {
-                rightDiagonalMap.put(character, 1);
+        // Right Diagonal
+        if (row + col == gameBoard.getSize() - 1) {
+            if (!rightDiagonalCharacterCountMap.containsKey(symbolChar)) {
+                rightDiagonalCharacterCountMap.put(symbolChar, 1);
             } else {
-                rightDiagonalMap.put(character, rightDiagonalMap.get(character) + 1);
+                rightDiagonalCharacterCountMap.put(symbolChar, rightDiagonalCharacterCountMap.get(symbolChar) + 1);
             }
 
-            if (rightDiagonalMap.get(character) == board.getSize()) {
+            if (rightDiagonalCharacterCountMap.get(symbolChar) == gameBoard.getSize()) {
                 return true;
             }
         }

@@ -10,32 +10,31 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws InvalidMoveException {
         System.out.println("Hello world!");
-        Scanner scanner = new Scanner(System.in);
+        Scanner inputScanner = new Scanner(System.in); // Renamed variable 'scanner' to 'inputScanner'
         GameController gameController = new GameController();
 
-        int dimension = 3;
-        List<Player> players = List.of(
-                new Player("Harsh", new Symbol('X'), PlayerType.HUMAN),
-                new Bot("Scaler", new Symbol('O'), PlayerType.BOT, BotDifficultyLevel.EASY)
+        int gameDimension = 3; // Renamed variable 'dimension' to 'gameDimension'
+        List<Player> gamePlayers = List.of(
+                new Player("DeviCharan", new Symbol('X'), PlayerType.HUMAN),
+                new Bot("ScalerSchoolOfTechnology", new Symbol('O'), PlayerType.BOT, BotDifficultyLevel.EASY)
         );
 
-        Game game = gameController.startGame(dimension, players);
-        //gameController.printBoard(game);
+        Game currentGame = gameController.startGame(gameDimension, gamePlayers); // Renamed variable 'game' to 'currentGame'
 
-        while (game.getGameState().equals(GameState.IN_PROGRESS)) {
-            //1. print the board.
-            gameController.printBoard(game);
+        while (currentGame.getGameState().equals(GameState.IN_PROGRESS)) {
+            // Print the game board
+            gameController.printBoard(currentGame);
 
-            //2. Player's turn
-            gameController.makeMove(game);
+            // Player's turn
+            gameController.makeMove(currentGame);
         }
 
-        if (!gameController.checkState(game).equals(GameState.ENDED)) {
-            game.setGameState(GameState.DRAW);
+        if (!gameController.checkState(currentGame).equals(GameState.ENDED)) {
+            currentGame.setGameState(GameState.DRAW);
             System.out.println("Game DRAW");
         } else {
-            gameController.printBoard(game);
-            System.out.println("Player " + gameController.getWinner(game).getName() + " is the winner");
+            gameController.printBoard(currentGame);
+            System.out.println("Player " + gameController.getWinner(currentGame).getName() + " is the winner");
         }
     }
 }

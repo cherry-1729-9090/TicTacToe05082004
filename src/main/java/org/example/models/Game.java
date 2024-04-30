@@ -7,116 +7,112 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
-    private Board board;
-    private List<Player> players;
-    private List<Move> moves;
-    private GameState gameState;
-    private Player winner;
-    private int nextPlayerMoveIndex;
+    private Board gameBoard;
+    private List<Player> gamePlayers;
+    private List<Move> gameMoves;
+    private GameState gameStatus;
+    private Player gameWinner;
+    private int currentPlayerIndex;
     private WinningAlgorithm winningAlgorithm;
 
     public Game(int dimension, List<Player> players) {
-        this.board = new Board(dimension);
-        this.players = players;
-        this.moves = new ArrayList<>();
-        this.gameState = GameState.IN_PROGRESS;
-        this.winner = null;
-        this.nextPlayerMoveIndex = 0;
+        this.gameBoard = new Board(dimension);
+        this.gamePlayers = players;
+        this.gameMoves = new ArrayList<>();
+        this.gameStatus = GameState.IN_PROGRESS;
+        this.gameWinner = null;
+        this.currentPlayerIndex = 0;
         this.winningAlgorithm = new WinningAlgorithm();
     }
 
     public Board getBoard() {
-        return board;
+        return gameBoard;
     }
 
     public void setBoard(Board board) {
-        this.board = board;
+        this.gameBoard = board;
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return gamePlayers;
     }
 
     public void setPlayers(List<Player> players) {
-        this.players = players;
+        this.gamePlayers = players;
     }
 
     public List<Move> getMoves() {
-        return moves;
+        return gameMoves;
     }
 
     public void setMoves(List<Move> moves) {
-        this.moves = moves;
+        this.gameMoves = moves;
     }
 
     public GameState getGameState() {
-        return gameState;
+        return gameStatus;
     }
 
     public void setGameState(GameState gameState) {
-        this.gameState = gameState;
+        this.gameStatus = gameState;
     }
 
     public Player getWinner() {
-        return winner;
+        return gameWinner;
     }
 
     public void setWinner(Player winner) {
-        this.winner = winner;
+        this.gameWinner = winner;
     }
 
     public int getNextPlayerMoveIndex() {
-        return nextPlayerMoveIndex;
+        return currentPlayerIndex;
     }
 
     public void setNextPlayerMoveIndex(int nextPlayerMoveIndex) {
-        this.nextPlayerMoveIndex = nextPlayerMoveIndex;
+        this.currentPlayerIndex = nextPlayerMoveIndex;
     }
 
     public void printBoard() {
-        this.board.printBoard();
+        this.gameBoard.printBoard();
     }
 
     private boolean validateMove(Move move) {
         int row = move.getCell().getRow();
         int col = move.getCell().getCol();
 
-        if (row < 0 || row >= board.getSize() || col < 0  || col >= board.getSize()) {
+        if (row < 0 || row >= gameBoard.getSize() || col < 0 || col >= gameBoard.getSize()) {
             return false;
         }
 
-        return board.getBoard().get(row).get(col).getCellState().equals(CellState.EMPTY);
+        return gameBoard.getBoard().get(row).get(col).getCellState().equals(CellState.EMPTY);
     }
 
     public void makeMove() throws InvalidMoveException {
-        Player currentPlayer = players.get(nextPlayerMoveIndex);
+        Player currentPlayer = gamePlayers.get(currentPlayerIndex);
 
         System.out.println("It is " + currentPlayer.getName() + "'s move.");
 
-        //Move that currentPlayer wants to make
-        Move move = currentPlayer.makeMove(board);
+        Move move = currentPlayer.makeMove(gameBoard);
 
-        //Game will validate the move before executing.
         if (!validateMove(move)) {
-            //throw an exception
             throw new InvalidMoveException("Invalid move made by " + currentPlayer.getName());
         }
 
         int row = move.getCell().getRow();
         int col = move.getCell().getCol();
 
-        Cell cellToChange = board.getBoard().get(row).get(col);
+        Cell cellToChange = gameBoard.getBoard().get(row).get(col);
         cellToChange.setPlayer(currentPlayer);
         cellToChange.setCellState(CellState.FILLED);
 
         Move finalMove = new Move(cellToChange, currentPlayer);
-        moves.add(finalMove);
-        nextPlayerMoveIndex = (nextPlayerMoveIndex + 1) % players.size();
+        gameMoves.add(finalMove);
+        currentPlayerIndex = (currentPlayerIndex + 1) % gamePlayers.size();
 
-        //Check if the current move is the winning move or not.
-        if (winningAlgorithm.checkWinner(board, finalMove)) {
-            gameState = GameState.ENDED;
-            winner = currentPlayer;
+        if (winningAlgorithm.checkWinner(gameBoard, finalMove)) {
+            gameStatus = GameState.ENDED;
+            gameWinner = currentPlayer;
         }
     }
 }
